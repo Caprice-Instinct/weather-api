@@ -5,10 +5,15 @@ import pandas as pd
 # Create website object instance
 app = Flask(__name__)
 
+
+stations = pd.read_csv('data_small/stations.txt', skiprows=17)
+stations =stations[['STAID',"STANAME                                 "]]
+
+
 # @ symbol means that line is a decorator; connects that method to function
 @app.route("/")
 def home():
-    return render_template('home.html')
+    return render_template('home.html', data=stations.to_html())
 
 
 @app.route("/api/v1/<station>/<date>")
